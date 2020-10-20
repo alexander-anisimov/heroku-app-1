@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 import os
 
 app = Flask(__name__)
@@ -24,6 +24,9 @@ books = [
      'published': '1975'}
 ]
 
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 @app.route('/', methods=['GET'])
 def home():
